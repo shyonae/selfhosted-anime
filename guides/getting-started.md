@@ -1,25 +1,30 @@
-## Actual pre-requisites
+# Getting started
 
-- Linux operating system, at the time of writing I use Ubuntu 22.04 LTS.
+### Table of contents
+1. [Getting started](getting-started.md)
+2. [Building](building.md)
+3. [Configuration](configuration.md)
+
+### Pre-requisites
+
+- Linux operating system
+  - at the time of writing I'm using Ubuntu 22.04 LTS.
 - Docker and docker-compose installed.
-- TRaSH Guides folder structure in place, read more [here](https://trash-guides.info/Hardlinks/How-to-setup-for/Docker/#folder-structure), this is what I use:
-  - **NOTE**: only the _\*-anime_ folders are really needed, this is just an overview as I have the complete TRaSH Guides setup but it's adjusted for anime.
-  - ```
-    data            # I called this 'storage'
-    ├── torrents
-    │   ├── movies
-    │   ├── movies-anime
-    │   ├── music
-    │   ├── tv-anime
-    │   └── tv
+- TRaSH Guides folder structure in place (there are commands on the next page), read more [here](https://trash-guides.info/Hardlinks/How-to-setup-for/Docker/#folder-structure), this is what I will use but it can be expanded:
+  ```
+    storage
+    ├── downloads
+    │   └──torrents
+    │     ├── movies-anime
+    │     └── tv-anime
     ├── drop        # I will explain this folder later, it's very useful for Shoko Server.
     │   ├── movies-anime
     │   └── tv-anime
-    └── media
-        ├── movies
+    └── medialibrary
         ├── movies-anime
-        ├── music
-        ├── tv-anime
-        └── tv
-    ```
+        └── tv-anime
+  ```
+
 - **Optional (_but encouraged_)**: **secret management option**. In my case, I use [**Infisical Cloud**](https://infisical.com/).
+
+Move on to the [Building](Building.md) section.
