@@ -23,4 +23,4 @@ The containers that will be used are the following:
 
 </br>
 
-To dive in, read the [wiki](https://github.com/shyonae/selfhosted-anime/wiki/Getting-started).
+To dive in, read the [wiki](https://github.com/shyonae/selfhosted-anime/wiki).
