@@ -27,4 +27,4 @@
 
 - **Optional (_but encouraged_)**: **secret management option**. In my case, I use [**Infisical Cloud**](https://infisical.com/).
 
-Move on to the [Building](Building.md) section.
+Move on to the [Building](building.md) section.

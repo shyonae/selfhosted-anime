@@ -7,7 +7,7 @@
 
 ## Folder structure
 
-Create the folders with these commands, the structure will be created _under the home folder of the current user_ in this case:
+Create the folders with these commands, in this case the structure will be created _under the home folder of the current user_:
 
 ```
 mkdir -p ~/storage/downloads/torrents/movies-anime
@@ -18,9 +18,14 @@ mkdir -p ~/storage/medialibrary/movies-anime
 mkdir -p ~/storage/medialibrary/tv-anime
 ```
 
-The folder structure is restricted and varies a bit from the one used in TRaSH Guides, but always make sure it uses the same logic.
+The folder structure is restricted and varies a bit from the one used in TRaSH Guides, but it uses the same logic.
 
 **Make sure to set the correct [permissions](https://trash-guides.info/Hardlinks/How-to-setup-for/Docker/#permissions).**
+
+```
+sudo chown -R $USER:$USER ~/storage
+sudo chmod -R a=,a+rX,u+w,g+w ~/storage
+```
 
 
 ## Compose section

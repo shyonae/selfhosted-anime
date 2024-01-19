@@ -4,6 +4,10 @@
 1. [Getting started](guides/getting-started.md)
 2. [Building](guides/building.md)
 3. [Configuration](guides/configuration.md)
+   1. [Qbittorrent configuration](guides/configuration/qbittorrent-config.md)
+   2. [Autobrr configuration](guides/configuration/autobrr-config.md)
+   3. [Shoko configuration](guides/configuration/shoko-config.md)
+   4. [Jellyfin configuration](guides/configuration/jellyfin-config.md)
 
 
 This project uses **Docker** for its infrastructure and **Ubuntu Linux** as its operating system, so anything else is out of my scope (_unless contributed_). This will give you a **stable and reliable** solution to manage your anime movies and tv-shows while having **proper metadata**.
