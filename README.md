@@ -17,7 +17,7 @@ The containers that will be used are the following:
 
 ## Important considerations
 
-- Shoko-server **REQUIRES** you to install **Shoko Desktop** to set up some important features, currently it's a **Windows only** application.
+- Shoko-server **REQUIRES** you to install **Shoko Desktop** to set up some important features, currently it's a **Windows only** application that requires a GUI. (you can install it on a different machine and on Linux, but more on it later)
 
 - You will have **some** automated downloads with Autobrr, but _it's not like the \*arrs_.
 
