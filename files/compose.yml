@@ -1,0 +1,87 @@
+version: "3.8"
+
+x-default-conf: &default_conf
+  restart: unless-stopped
+  networks:
+    - downloadNetwork
+
+x-default-conf-jelly: &default_conf_jelly
+  restart: unless-stopped
+  networks:
+    - jellyNetwork
+
+x-environment: &environment
+  PGID: ${PGID}
+  PUID: ${PUID}
+  TZ: ${TZ}
+
+services:
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    environment:
+      <<: *environment
+    <<: *default_conf
+    volumes:
+      - qbittorrent:/config
+      - ${DOCKERSTORAGEDIR}:/storage
+    ports:
+      - 8080:8080
+
+  autobrr:
+    container_name: autobrr
+    image: ghcr.io/autobrr/autobrr:latest
+    environment:
+      <<: *environment
+    <<: *default_conf
+    volumes:
+      - autobrr:/config
+    ports:
+      - 7474:7474
+
+  shoko_server:
+    shm_size: 256m
+    container_name: shokoserver
+    image: shokoanime/server:daily # I personally use the 'daily' tag, but it is unstable so use the 'latest' tag if you want.
+    environment:
+      <<: *environment
+    <<: *default_conf_jelly
+    volumes:
+      - shoko:/home/shoko/.shoko
+      - ${DOCKERSTORAGEDIR}:/mnt
+    ports:
+      - 8111:8111
+
+  jellyfin:
+    container_name: jellyfin
+    image: lscr.io/linuxserver/jellyfin:latest
+    environment:
+      <<: *environment
+    <<: *default_conf_jelly
+    volumes:
+      - jellyfin:/config
+      - ${DOCKERSTORAGEDIR}/medialibrary:/data
+    ports:
+      - 8096:8096
+
+volumes:
+  jellyfin:
+    external: false
+    name: jellyfin-volume
+  autobrr:
+    external: false
+    name: autobrr-volume
+  qbittorrent:
+    external: false
+    name: qbittorrent-volume
+  shoko:
+    external: false
+    name: shoko-volume
+
+networks:
+  downloadNetwork:
+    name: downloadNetwork
+    driver: bridge
+  jellyNetwork:
+    name: jellyNetwork
+    driver: bridge
