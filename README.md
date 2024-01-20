@@ -2,6 +2,8 @@
 
 This project uses **Docker** for its infrastructure and **Ubuntu Linux** as its operating system, so anything else is out of my scope (_unless contributed_). This will give you a **stable and reliable** solution to manage your anime movies and tv-shows while having **proper metadata**.
 
+### NOTE (01/20/2024): This guide doesn't include every container you might need, you could add Bazarr for subtitles for example, I'll just show you the basics and maybe update it in the future.
+
 - **I will NOT be using Sonarr and Radarr.**
 
 Along the way I'll explain how I did things **_my way_**, of course a lot of stuff can be changed and improved, that's up to you.
