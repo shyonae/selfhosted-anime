@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  jellyfin:
+    container_name: jellyfin
+    image: lscr.io/linuxserver/jellyfin:latest
+    environment:
+      PGID: ${PGID}
+      PUID: ${PUID}
+      TZ: ${TZ}
+    restart: unless-stopped
+    networks:
+      - jellyNetwork
+    volumes:
+      - jellyfin:/config
+      - ${DOCKERSTORAGEDIR}/medialibrary:/data
+    ports:
+      - 8096:8096
+
+volumes:
+  jellyfin:
+    external: false
+    name: jellyfin-volume
+
+networks:
+  jellyNetwork:
+    driver: bridge
+    external: true

@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    environment:
+      PGID: ${PGID}
+      PUID: ${PUID}
+      TZ: ${TZ}
+    restart: unless-stopped
+    networks:
+      - downloadNetwork
+    volumes:
+      - qbittorrent:/config
+      - ${DOCKERSTORAGEDIR}:/storage
+    ports:
+      - 8080:8080
+
+volumes:
+  qbittorrent:
+    external: false
+    name: qbittorrent-volume
+
+networks:
+  downloadNetwork:
+    driver: bridge
+    external: true

@@ -80,8 +80,8 @@ volumes:
 
 networks:
   downloadNetwork:
-    name: downloadNetwork
     driver: bridge
+    external: true
   jellyNetwork:
-    name: jellyNetwork
     driver: bridge
+    external: true

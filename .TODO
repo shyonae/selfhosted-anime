@@ -1,0 +1,4 @@
+- add external network creation in wiki
+- add option in wiki that says you can create each container one by one instead of using a big ass compose
+- figure out plex integration with shoko + add container + add wiki
+- qbittorrent vpn container + config page on wiki
