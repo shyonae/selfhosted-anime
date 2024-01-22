@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+  plex:
+    image: lscr.io/linuxserver/plex:latest
+    container_name: plex
+    environment:
+      PGID: ${PGID}
+      PUID: ${PUID}
+      TZ: ${TZ}
+      VERSION: docker
+    env_file:
+      - path: ../.env
+    volumes:
+      - plex:/config
+      - ${DOCKERSTORAGEDIR}:/storage
+    restart: unless-stopped
+
+volumes:
+  plex:
+    external: false
+    name: plex-volume
+
+networks:
+  plexNetwork:
+    driver: bridge
+    external: true

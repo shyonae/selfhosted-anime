@@ -1,0 +1,107 @@
+version: "3.8"
+
+x-default-conf: &default_conf
+  restart: unless-stopped
+  networks:
+    - downloadNetwork
+
+x-default-conf-plex: &default_conf_plex
+  restart: unless-stopped
+  networks:
+    - plexNetwork
+
+x-environment: &environment
+  PGID: ${PGID}
+  PUID: ${PUID}
+  TZ: ${TZ}
+
+services:
+  qbittorrentvpn:
+    logging:
+      driver: json-file
+    privileged: true
+    cap_add:
+      - NET_ADMIN
+    container_name: qbittorrentvpn
+    image: binhex/arch-qbittorrentvpn:latest
+    environment:
+      <<: *environment
+      UMASK: 022
+      DEBUG: false
+      VPN_ENABLED: yes
+      VPN_CLIENT: wireguard
+      VPN_USER: ""
+      VPN_PASS: <vpn password>
+      VPN_PROV: custom
+      STRICT_PORT_FORWARD: yes
+      LAN_NETWORK: 192.168.1.0/24
+      NAME_SERVERS: 84.200.69.80,37.235.1.174,1.1.1.1,37.235.1.177,84.200.70.40,1.0.0.1
+      WEBUI_PORT: 8080
+    <<: *default_conf
+    env_file:
+      - path: ../.env
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - qbittorrentvpn:/config
+      - ${DOCKERSTORAGEDIR}:/storage
+    ports:
+      - 8080:8080/tcp
+      - 8118:8118/tcp
+
+  autobrr:
+    container_name: autobrr
+    image: ghcr.io/autobrr/autobrr:latest
+    environment:
+      <<: *environment
+    <<: *default_conf
+    volumes:
+      - autobrr:/config
+    ports:
+      - 7474:7474
+
+  shoko_server:
+    shm_size: 256m
+    container_name: shokoserver
+    image: shokoanime/server:daily # I personally use the 'daily' tag, but it is unstable so use the 'latest' tag if you want.
+    environment:
+      <<: *environment
+    <<: *default_conf_plex
+    volumes:
+      - shoko:/home/shoko/.shoko
+      - ${DOCKERSTORAGEDIR}:/mnt
+    ports:
+      - 8111:8111
+
+  plex:
+    image: lscr.io/linuxserver/plex:latest
+    container_name: plex
+    environment:
+      <<: *environment
+    <<: *default_conf_plex
+    env_file:
+      - path: ../.env
+    volumes:
+      - plex:/config
+      - ${DOCKERSTORAGEDIR}:/storage
+
+volumes:
+  plex:
+    external: false
+    name: plex-volume
+  autobrr:
+    external: false
+    name: autobrr-volume
+  qbittorrentvpn:
+    external: false
+    name: qbittorrentvpn-volume
+  shoko:
+    external: false
+    name: shoko-volume
+
+networks:
+  downloadNetwork:
+    driver: bridge
+    external: true
+  plexNetwork:
+    driver: bridge
+    external: true

@@ -1,0 +1,51 @@
+version: "3.8"
+
+services:
+  # qBittorrentvpn - https://github.com/binhex/arch-qbittorrentvpn
+  # compose thanks to https://gist.github.com/TRaSH-/68cd26deb5e6269e5eb8114f93b429ab
+  # Mullvad setup guide used for this example https://anebula.io/how-to-set-up-binhex-vpn-docker-containers-on-mullvad-wireguard/
+  qbittorrentvpn:
+    logging:
+      driver: json-file
+    privileged: true
+    cap_add:
+      - NET_ADMIN
+    container_name: qbittorrentvpn
+    image: binhex/arch-qbittorrentvpn:latest
+    environment:
+      PGID: ${PGID}
+      PUID: ${PUID}
+      TZ: ${TZ}
+      UMASK: 022
+      DEBUG: false
+      VPN_ENABLED: yes
+      VPN_CLIENT: wireguard
+      VPN_USER: ""
+      VPN_PASS: <vpn password>
+      VPN_PROV: custom
+      STRICT_PORT_FORWARD: yes
+      LAN_NETWORK: 192.168.1.0/24
+      NAME_SERVERS: 84.200.69.80,37.235.1.174,1.1.1.1,37.235.1.177,84.200.70.40,1.0.0.1
+      WEBUI_PORT: 8080
+    restart: unless-stopped
+    env_file:
+      - path: ../.env
+    networks:
+      - downloadNetwork
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - qbittorrentvpn:/config
+      - ${DOCKERSTORAGEDIR}:/storage
+    ports:
+      - 8080:8080/tcp
+      - 8118:8118/tcp
+
+volumes:
+  qbittorrentvpn:
+    external: false
+    name: qbittorrentvpn-volume
+
+networks:
+  downloadNetwork:
+    driver: bridge
+    external: true

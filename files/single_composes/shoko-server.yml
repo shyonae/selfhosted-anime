@@ -10,18 +10,26 @@ services:
       PUID: ${PUID}
       TZ: ${TZ}
     restart: unless-stopped
+    env_file:
+      - path: ../.env
     networks:
       - jellyNetwork
+      - plexNetwork
     volumes:
       - shoko:/home/shoko/.shoko
       - ${DOCKERSTORAGEDIR}:/mnt
     ports:
       - 8111:8111
+
+volumes:
   shoko:
     external: false
     name: shoko-volume
 
 networks:
   jellyNetwork:
+    driver: bridge
+    external: true
+  plexNetwork:
     driver: bridge
     external: true
