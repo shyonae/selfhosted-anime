@@ -9,6 +9,8 @@ services:
       PUID: ${PUID}
       TZ: ${TZ}
       VERSION: docker
+    networks:
+      - plexNetwork
     volumes:
       - plex:/config
       - ${DOCKERSTORAGEDIR}:/storage
