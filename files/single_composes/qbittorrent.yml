@@ -9,8 +9,6 @@ services:
       PUID: ${PUID}
       TZ: ${TZ}
     restart: unless-stopped
-    env_file:
-      - path: ../.env
     networks:
       - downloadNetwork
     volumes:
@@ -21,7 +19,7 @@ services:
 
 volumes:
   qbittorrent:
-    external: false
+    external: true
     name: qbittorrent-volume
 
 networks:

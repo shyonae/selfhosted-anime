@@ -9,16 +9,16 @@ services:
       PUID: ${PUID}
       TZ: ${TZ}
       VERSION: docker
-    env_file:
-      - path: ../.env
     volumes:
       - plex:/config
       - ${DOCKERSTORAGEDIR}:/storage
+    ports:
+      - 32400:32400
     restart: unless-stopped
 
 volumes:
   plex:
-    external: false
+    external: true
     name: plex-volume
 
 networks:

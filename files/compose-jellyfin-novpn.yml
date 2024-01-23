@@ -66,16 +66,16 @@ services:
 
 volumes:
   jellyfin:
-    external: false
+    external: true
     name: jellyfin-volume
   autobrr:
-    external: false
+    external: true
     name: autobrr-volume
   qbittorrent:
-    external: false
+    external: true
     name: qbittorrent-volume
   shoko:
-    external: false
+    external: true
     name: shoko-volume
 
 networks:

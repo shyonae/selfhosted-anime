@@ -58,24 +58,24 @@ services:
     environment:
       <<: *environment
     <<: *default_conf_plex
-    env_file:
-      - path: ../.env
     volumes:
       - plex:/config
       - ${DOCKERSTORAGEDIR}:/storage
+    ports:
+      - 32400:32400
 
 volumes:
   plex:
-    external: false
+    external: true
     name: plex-volume
   autobrr:
-    external: false
+    external: true
     name: autobrr-volume
   qbittorrent:
-    external: false
+    external: true
     name: qbittorrent-volume
   shoko:
-    external: false
+    external: true
     name: shoko-volume
 
 networks:

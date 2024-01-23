@@ -10,8 +10,6 @@ services:
       PUID: ${PUID}
       TZ: ${TZ}
     restart: unless-stopped
-    env_file:
-      - path: ../.env
     networks:
       - jellyNetwork
       - plexNetwork
@@ -23,7 +21,7 @@ services:
 
 volumes:
   shoko:
-    external: false
+    external: true
     name: shoko-volume
 
 networks:
