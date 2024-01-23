@@ -1,0 +1,33 @@
+version: "3.8"
+
+services:
+  shoko_server:
+    shm_size: 256m
+    container_name: shokoserver
+    image: shokoanime/server:daily # I personally use the 'daily' tag, but it is unstable so use the 'latest' tag if you want.
+    environment:
+      PGID: ${PGID}
+      PUID: ${PUID}
+      TZ: ${TZ}
+    restart: unless-stopped
+    networks:
+      - jellyNetwork
+      - plexNetwork
+    volumes:
+      - shoko:/home/shoko/.shoko
+      - ${DOCKERSTORAGEDIR}:/mnt
+    ports:
+      - 8111:8111
+
+volumes:
+  shoko:
+    external: true
+    name: shoko-volume
+
+networks:
+  jellyNetwork:
+    driver: bridge
+    external: true
+  plexNetwork:
+    driver: bridge
+    external: true

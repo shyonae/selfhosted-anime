@@ -5,10 +5,10 @@ x-default-conf: &default_conf
   networks:
     - downloadNetwork
 
-x-default-conf-jelly: &default_conf_jelly
+x-default-conf-plex: &default_conf_plex
   restart: unless-stopped
   networks:
-    - jellyNetwork
+    - plexNetwork
 
 x-environment: &environment
   PGID: ${PGID}
@@ -45,43 +45,43 @@ services:
     image: shokoanime/server:daily # I personally use the 'daily' tag, but it is unstable so use the 'latest' tag if you want.
     environment:
       <<: *environment
-    <<: *default_conf_jelly
+    <<: *default_conf_plex
     volumes:
       - shoko:/home/shoko/.shoko
       - ${DOCKERSTORAGEDIR}:/mnt
     ports:
       - 8111:8111
 
-  jellyfin:
-    container_name: jellyfin
-    image: lscr.io/linuxserver/jellyfin:latest
+  plex:
+    image: lscr.io/linuxserver/plex:latest
+    container_name: plex
     environment:
       <<: *environment
-    <<: *default_conf_jelly
+    <<: *default_conf_plex
     volumes:
-      - jellyfin:/config
-      - ${DOCKERSTORAGEDIR}/medialibrary:/data
+      - plex:/config
+      - ${DOCKERSTORAGEDIR}:/storage
     ports:
-      - 8096:8096
+      - 32400:32400
 
 volumes:
-  jellyfin:
-    external: false
-    name: jellyfin-volume
+  plex:
+    external: true
+    name: plex-volume
   autobrr:
-    external: false
+    external: true
     name: autobrr-volume
   qbittorrent:
-    external: false
+    external: true
     name: qbittorrent-volume
   shoko:
-    external: false
+    external: true
     name: shoko-volume
 
 networks:
   downloadNetwork:
-    name: downloadNetwork
     driver: bridge
-  jellyNetwork:
-    name: jellyNetwork
+    external: true
+  plexNetwork:
     driver: bridge
+    external: true

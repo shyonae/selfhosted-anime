@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+  autobrr:
+    container_name: autobrr
+    image: ghcr.io/autobrr/autobrr:latest
+    environment:
+      PGID: ${PGID}
+      PUID: ${PUID}
+      TZ: ${TZ}
+    restart: unless-stopped
+    networks:
+      - downloadNetwork
+    volumes:
+      - autobrr:/config
+    ports:
+      - 7474:7474
+
+volumes:
+  autobrr:
+    external: true
+    name: autobrr-volume
+
+networks:
+  downloadNetwork:
+    driver: bridge
+    external: true
